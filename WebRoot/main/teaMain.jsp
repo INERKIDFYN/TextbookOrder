@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*,cn.zzu.pojo.Student" pageEncoding="utf-8"%>
+<%@ page language="java" import="java.util.*,cn.zzu.pojo.Teacher" pageEncoding="utf-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -11,8 +11,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
   </head>
   <%
-     Student s=(Student)session.getAttribute("user");
-     String name=s.getName();
+     Teacher t=(Teacher)session.getAttribute("user");
+     String name=t.getName();
   %>
   <body>
   <div>

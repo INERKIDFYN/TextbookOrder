@@ -32,44 +32,20 @@ public class LoginServlet extends HttpServlet {
 			req.getRequestDispatcher("/login.jsp").forward(req, resp);
 			return;
 		}
+		HttpSession hs=req.getSession();
+		hs.setAttribute("user", u);
 		if(identity.equals("学生")){
 			Student s=(Student) u;
-			stuLogin(s,req,resp);
+			hs.setAttribute("identity", "学生");
+			resp.sendRedirect("/tb/main/stuMain.jsp");
 		}else if(identity.equals("教师")){
 			Teacher t=(Teacher) u;
-			teaLogin(t,req,resp);
+			hs.setAttribute("identity", "教师");
+			resp.sendRedirect("/tb/main/teaMain.jsp");
 		}else if(identity.equals("教材发行人员")){
 			Manager m=(Manager) u;
-			manLogin(m,req,resp);
-		}
-	}
-	private void manLogin(Manager m, HttpServletRequest req,
-			HttpServletResponse resp) throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		if(m!=null){
-			HttpSession hs=req.getSession();
-			hs.setAttribute("manager", m);
-			resp.sendRedirect("/tb/main/main.jsp");
-		}
-	}
-
-	private void teaLogin(Teacher t, HttpServletRequest req,
-			HttpServletResponse resp) throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		if(t!=null){
-			HttpSession hs=req.getSession();
-			hs.setAttribute("teacher", t);
-			resp.sendRedirect("/tb/main/main.jsp");
-		}
-	}
-
-	private void stuLogin(Student s,HttpServletRequest req,HttpServletResponse resp) throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		
-		if(s!=null){
-			HttpSession hs=req.getSession();
-			hs.setAttribute("student", s);
-			resp.sendRedirect("/tb/main/stuMain.jsp");
+			hs.setAttribute("identity", "教材发行人员");
+			resp.sendRedirect("/tb/main/manMain.jsp");
 		}
 	}
 }
