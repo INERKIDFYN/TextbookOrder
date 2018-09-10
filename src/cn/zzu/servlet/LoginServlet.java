@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import cn.zzu.pojo.Manager;
 import cn.zzu.pojo.Student;
 import cn.zzu.pojo.Teacher;
 import cn.zzu.service.LoginService;
@@ -30,6 +31,22 @@ public class LoginServlet extends HttpServlet {
 		}else if(identity.equals("教师")){
 			Teacher t=ls.checkTeaLogin(id, pwd);
 			teaLogin(t,req,resp);
+		}else if(identity.equals("教材发行人员")){
+			Manager m=ls.checkManLogin(id, pwd);
+			manLogin(m,req,resp);
+		}
+	}
+
+	private void manLogin(Manager m, HttpServletRequest req,
+			HttpServletResponse resp) throws IOException, ServletException {
+		// TODO Auto-generated method stub
+		if(m!=null){
+			HttpSession hs=req.getSession();
+			hs.setAttribute("manager", m);
+			resp.sendRedirect("/tb/main/main.jsp");
+		}else{
+			req.setAttribute("loginFlag", false);
+			req.getRequestDispatcher("/login.jsp").forward(req, resp);
 		}
 	}
 

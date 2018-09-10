@@ -2,6 +2,7 @@ package cn.zzu.serviceImp;
 
 import cn.zzu.dao.LoginDao;
 import cn.zzu.daoImp.LoginDaoImp;
+import cn.zzu.pojo.Manager;
 import cn.zzu.pojo.Student;
 import cn.zzu.pojo.Teacher;
 import cn.zzu.service.LoginService;
@@ -18,6 +19,11 @@ public class LoginServiceImp implements LoginService{
 	public Teacher checkTeaLogin(String id, String pwd) {
 		// TODO Auto-generated method stub
 		return ld.checkTeaLoginDao(id, pwd);
+	}
+	@Override
+	public Manager checkManLogin(String id, String pwd) {
+		// TODO Auto-generated method stub
+		return ld.checkManLoginDao(id,pwd);
 	}
 
 
