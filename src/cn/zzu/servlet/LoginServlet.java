@@ -11,11 +11,13 @@ import javax.servlet.http.HttpSession;
 import cn.zzu.pojo.Manager;
 import cn.zzu.pojo.Student;
 import cn.zzu.pojo.Teacher;
+import cn.zzu.pojo.User;
 import cn.zzu.service.LoginService;
 import cn.zzu.serviceImp.LoginServiceImp;
 
 public class LoginServlet extends HttpServlet {
 
+	LoginService ls=new LoginServiceImp();
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -24,19 +26,23 @@ public class LoginServlet extends HttpServlet {
 		String identity=(String) req.getParameter("identity");
 		String id=req.getParameter("id");
 		String pwd=req.getParameter("password");
-		LoginService ls=new LoginServiceImp();
+		User u=ls.checkLogin(id, pwd, identity);
+		if(u==null){
+			req.setAttribute("loginFlag", false);
+			req.getRequestDispatcher("/login.jsp").forward(req, resp);
+			return;
+		}
 		if(identity.equals("学生")){
-			Student s=ls.checkStuLogin(id, pwd);
+			Student s=(Student) u;
 			stuLogin(s,req,resp);
 		}else if(identity.equals("教师")){
-			Teacher t=ls.checkTeaLogin(id, pwd);
+			Teacher t=(Teacher) u;
 			teaLogin(t,req,resp);
 		}else if(identity.equals("教材发行人员")){
-			Manager m=ls.checkManLogin(id, pwd);
+			Manager m=(Manager) u;
 			manLogin(m,req,resp);
 		}
 	}
-
 	private void manLogin(Manager m, HttpServletRequest req,
 			HttpServletResponse resp) throws IOException, ServletException {
 		// TODO Auto-generated method stub
@@ -44,9 +50,6 @@ public class LoginServlet extends HttpServlet {
 			HttpSession hs=req.getSession();
 			hs.setAttribute("manager", m);
 			resp.sendRedirect("/tb/main/main.jsp");
-		}else{
-			req.setAttribute("loginFlag", false);
-			req.getRequestDispatcher("/login.jsp").forward(req, resp);
 		}
 	}
 
@@ -57,9 +60,6 @@ public class LoginServlet extends HttpServlet {
 			HttpSession hs=req.getSession();
 			hs.setAttribute("teacher", t);
 			resp.sendRedirect("/tb/main/main.jsp");
-		}else{
-			req.setAttribute("loginFlag", false);
-			req.getRequestDispatcher("/login.jsp").forward(req, resp);
 		}
 	}
 
@@ -69,10 +69,7 @@ public class LoginServlet extends HttpServlet {
 		if(s!=null){
 			HttpSession hs=req.getSession();
 			hs.setAttribute("student", s);
-			resp.sendRedirect("/tb/main/main.jsp");
-		}else{
-			req.setAttribute("loginFlag", false);
-			req.getRequestDispatcher("/login.jsp").forward(req, resp);
+			resp.sendRedirect("/tb/main/stuMain.jsp");
 		}
 	}
 }

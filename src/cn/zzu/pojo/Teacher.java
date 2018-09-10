@@ -1,30 +1,10 @@
 package cn.zzu.pojo;
 
-public class Teacher {
+public class Teacher extends User{
 
-	private String Tid;
-	private String Tpassword;
-	private String Tname;
 	private String Tcollege;
 	private String Tphonenumber;
-	public String getTid() {
-		return Tid;
-	}
-	public void setTid(String tid) {
-		Tid = tid;
-	}
-	public String getTpassword() {
-		return Tpassword;
-	}
-	public void setTpassword(String tpassword) {
-		Tpassword = tpassword;
-	}
-	public String getTname() {
-		return Tname;
-	}
-	public void setTname(String tname) {
-		Tname = tname;
-	}
+	
 	public String getTcollege() {
 		return Tcollege;
 	}
@@ -39,10 +19,7 @@ public class Teacher {
 	}
 	public Teacher(String tid, String tpassword, String tname, String tcollege,
 			String tphonenumber) {
-		super();
-		Tid = tid;
-		Tpassword = tpassword;
-		Tname = tname;
+		super(tid,tpassword,tname);
 		Tcollege = tcollege;
 		Tphonenumber = tphonenumber;
 	}
