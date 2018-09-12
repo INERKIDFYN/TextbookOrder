@@ -20,6 +20,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      <a href="">查看个人信息</a>
      <a href="/tb/user/pwd.jsp">修改密码</a>
   </div>
-         这里是本学期教材 <br>
+        <a href="teacherService?oper=subJsp">提交书单</a>
+        <a href="teacherService?oper=checkSubJsp">查看审核进度</a>
   </body>
 </html>

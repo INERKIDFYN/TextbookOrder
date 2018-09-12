@@ -42,9 +42,9 @@ public class LoginServlet extends HttpServlet {
 			Teacher t=(Teacher) u;
 			hs.setAttribute("identity", "教师");
 			resp.sendRedirect("/tb/main/teaMain.jsp");
-		}else if(identity.equals("教材发行人员")){
+		}else if(identity.equals("管理员")){
 			Manager m=(Manager) u;
-			hs.setAttribute("identity", "教材发行人员");
+			hs.setAttribute("identity", "管理员");
 			resp.sendRedirect("/tb/main/manMain.jsp");
 		}
 	}

@@ -58,7 +58,7 @@ public class LoginDaoImp implements LoginDao{
 					t.setTphonenumber(rs.getString("Tphonenumber"));
 				}
 				return t;
-			}else if(identity.equals("教材发行人员")){
+			}else if(identity.equals("管理员")){
 				Manager m=null;
 				String sql="select * from manager where Mid=? and Mpassword=?";
 				ps=conn.prepareStatement(sql);
