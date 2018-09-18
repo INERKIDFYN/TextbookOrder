@@ -1,9 +1,6 @@
 package cn.zzu.servlet;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -14,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import cn.zzu.JsonReader.JsonReader;
 import cn.zzu.pojo.Book;
 import cn.zzu.pojo.Record;
 import cn.zzu.pojo.Teacher;
@@ -50,11 +48,11 @@ public class TeacherServlet extends HttpServlet {
 	private void checkSubRec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession hs=req.getSession();
-		Teacher t=(Teacher) hs.getAttribute("user");
-		List<Record> records=ts.checkSubRec(t.getId());
+		Teacher t=(Teacher) hs.getAttribute("teacher");
+		List<Record> records=ts.checkSubRec(t.getTid());
 		if(records!=null){
 			req.setAttribute("records", records);
-			req.getRequestDispatcher("/user/teacher/check_sub_pro.jsp").forward(req, resp);
+			req.getRequestDispatcher("/main/teacher/verification_result.jsp").forward(req, resp);
 		}
 	}
 
@@ -65,17 +63,20 @@ public class TeacherServlet extends HttpServlet {
 		//获得json对象
 		
 		JSONObject json=new JsonReader().receivePost(req);
-		Teacher t=(Teacher) hs.getAttribute("user");
+		Teacher t=(Teacher) hs.getAttribute("teacher");
 		String year=json.getString("year");
 		String major=json.getString("major");
 		JSONArray jsonArray=json.getJSONArray("books");
-		String[] books=new String[jsonArray.size()];
+		String [] bookid=new String [jsonArray.size()];
 		for(int i=0;i<jsonArray.size();i++){
-			books[i]=jsonArray.getString(i);
+			bookid[i]=(String)jsonArray.get(i);
 		}
-		System.out.println(year+":"+major+":"+books);
-		JSONObject jsonObject=new JSONObject() ;
-		boolean flag=ts.SubBooksOrder(books,t.getId(),year,major);
+		List<Book> books=ts.StockBooksById(bookid);
+		for(Book b:books){
+			System.out.println(b.getBauthor());
+		}
+		JSONObject jsonObject=new JSONObject();
+		boolean flag=ts.SubBooksOrder(books,t.getTid(),year,major);
 		if(flag){
 			jsonObject.put("message", "提交成功！");
 			resp.getWriter().write(jsonObject.toString());
@@ -91,31 +92,7 @@ public class TeacherServlet extends HttpServlet {
 		List<Book> books=ts.StockBooks();
 		if(books!=null){
 			req.setAttribute("books", books);
-			req.getRequestDispatcher("/user/teacher/sub_book_order.jsp").forward(req, resp);
-		}
-	}
-
-
-	
-	
-	
-	class JsonReader {
-		public JSONObject receivePost(HttpServletRequest request) throws IOException, UnsupportedEncodingException {
-	 
-			if(request.getMethod().equals("get")){
-				return null;
-			}
-			// 读取请求内容
-			BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(),"utf-8"));
-			String line = null;
-			StringBuilder sb = new StringBuilder();
-			while ((line = br.readLine()) != null) {
-				sb.append(line);
-			}
-			br.close();
-			//将json字符串转换为json对象
-			JSONObject json=JSONObject.fromObject(sb.toString());
-			return json;
+			req.getRequestDispatcher("/main/teacher/submit_text.jsp").forward(req, resp);
 		}
 	}
 

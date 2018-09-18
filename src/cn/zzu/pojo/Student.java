@@ -1,7 +1,28 @@
 package cn.zzu.pojo;
 
-public class Student extends User{
+public class Student{
 
+	private String Sid;
+	private String Sname;
+	private String Spassword;
+	public String getSid() {
+		return Sid;
+	}
+	public void setSid(String sid) {
+		Sid = sid;
+	}
+	public String getSname() {
+		return Sname;
+	}
+	public void setSname(String sname) {
+		Sname = sname;
+	}
+	public String getSpassword() {
+		return Spassword;
+	}
+	public void setSpassword(String spassword) {
+		Spassword = spassword;
+	}
 	private int Syear;
 	private String Scollege;
 	private String Smajor;
@@ -28,14 +49,6 @@ public class Student extends User{
 		return Sclass;
 	}
 	public void setSclass(String sclass) {
-		Sclass = sclass;
-	}
-	public Student(String sid, String spassword, String sname, int syear,
-			String scollege, String smajor, String sclass) {
-		super(sid,spassword,sname);
-		Syear = syear;
-		Scollege = scollege;
-		Smajor = smajor;
 		Sclass = sclass;
 	}
 	public Student() {

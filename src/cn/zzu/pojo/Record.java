@@ -11,12 +11,20 @@ public class Record {
 	private int pass;
 	private int Syear;
 	private String Smajor;
-	private int check;
-	public int getCheck() {
-		return check;
+	private int checked;
+	private String comment;
+	public String getComment() {
+		return comment;
 	}
-	public void setCheck(int check) {
-		this.check = check;
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+	
+	public int getChecked() {
+		return checked;
+	}
+	public void setChecked(int checked) {
+		this.checked = checked;
 	}
 	public String getTid() {
 		return Tid;

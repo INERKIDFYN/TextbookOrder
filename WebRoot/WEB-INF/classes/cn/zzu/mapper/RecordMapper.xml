@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="cn.zzu.mapper.RecordMapper">
+  <select id="che_records" resultType="cn.zzu.pojo.Record">
+     select * from t_buy where checked=0
+  </select>
+  <select id="check_recordsbyid" resultType="cn.zzu.pojo.Record">
+     select * from t_buy where Tid=#{id}
+  </select>
+  <insert id="sub_books" parameterType="List">
+  insert into t_buy(Tid,Bid,Bname,Bauthor,Bpress,Bprice,pass,Syear,Smajor) values
+  <foreach collection="list" item="item" index="index" separator=",">
+  (#{item.Tid},#{item.Bid},#{item.Bname},#{item.Bauthor},#{item.Bpress},#{item.Bprice},#{item.pass},#{item.Syear},#{item.Smajor})
+  </foreach>
+  </insert>
+  <update id="sub_comment" parameterType="java.util.Map">
+  update t_buy set pass=#{pass},checked=1,comment=#{comment} where Tid=#{Tid} and Bid=#{Bid} and Syear=#{year} and Smajor=#{major} 
+  </update>
+  </mapper>

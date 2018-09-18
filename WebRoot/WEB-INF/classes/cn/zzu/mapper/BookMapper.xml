@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="cn.zzu.mapper.BookMapper">
+  <select id="StockBooks" resultType="cn.zzu.pojo.Book">
+  select * from stock
+  </select>
+  <select id="StockBooksById" resultType="cn.zzu.pojo.Book">
+  select * from stock where Bid in 
+  <foreach collection="array" item="bookid"  open="(" close=")" separator=",">
+    #{bookid}
+  </foreach>
+  </select>
+  </mapper>

@@ -54,10 +54,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<form id="fm" >
 			<input type="hidden" name="oper" value="subBooks" />
 			<select id="year" name="year">
-				<option value="1">大一</option>
-				<option value="2">大二</option>
-				<option value="3">大三</option>
-				<option value="4">大四</option>
+				<option value="2018">大一</option>
+				<option value="2017">大二</option>
+				<option value="2016">大三</option>
+				<option value="2015">大四</option>
 			</select>
 			<select id="major" name="major">
 				<option value="软件工程">软件工程</option>
